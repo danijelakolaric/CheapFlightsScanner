@@ -1,0 +1,51 @@
+﻿@model CheapFlightsScanner.Core.DTO.FlightOffersDTO
+
+<div class="text-center">
+    <h1 class="display-4">Where to next?</h1>
+</div>
+<div class="container">
+    <form method="post" asp-action="Index" asp-controller="Home">
+        <input type="text" asp-for="FlightOffersForm.OriginLocationCode" placeholder="From" />
+        <input type="text" asp-for="FlightOffersForm.DestinationLocationCode" placeholder="To" />
+        <input type="date" asp-for="FlightOffersForm.DepartureDate" value="" />
+        <input type="number" asp-for="FlightOffersForm.Adults" value=""/>
+        <button type="submit">Search flights</button>
+    </form>
+</div>
+<br />
+@if (Model.GetFlightOffersResponseDto.Count > 0)
+{
+    <div>
+        <h1>List of Flight Offers</h1>
+        <br />
+        <table id="flightOffersTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Price</th>
+                    <th>One way</th>
+                    <th>Last ticketing date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GetFlightOffersResponseDto)
+                {
+                    <tr>
+                        <td>
+                            @item.id
+                        </td>
+                        <td>
+                            @item.price.grandTotal @item.price.currency
+                        </td>
+                        <td>
+                            @item.oneWay
+                        </td>
+                        <td>
+                            @item.lastTicketingDate
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
